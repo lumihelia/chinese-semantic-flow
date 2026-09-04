@@ -113,9 +113,7 @@ Chinese Semantic Flow 更靠前一步：它试图约束**生成判断本身**。
 - `extensions/merva-dialogue.md`：对话密度、推断边界、agency、cognitive / relational playfulness。
 
 核心 Skill 可以单独使用；需要特定风格时再加载扩展。
+
 ## License
 
 MIT License. See `LICENSE`.
-
-Copyright (c) 2026 Helia / LumiHelia.
-
