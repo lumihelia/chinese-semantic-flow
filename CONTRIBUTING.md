@@ -1,39 +1,54 @@
 # Contributing
 
-Chinese Semantic Flow grows from concrete language failures and concrete corrections.
+中文 · [English](./CONTRIBUTING.en.md)
 
-The preferred unit of contribution is a **judgment case**, not a new prohibition.
+Chinese Semantic Flow 从具体语言失败和具体纠正中生长。
 
-## Propose a case
+最有价值的贡献单位是一个 **judgment case**，而不是一条新的禁令。
 
-Please include:
+## 提交一个 case
 
-1. **Context / prompt** — what was being written or discussed;
-2. **Original output** — the sentence or response that felt wrong;
-3. **Why it fails** — describe the semantic or interaction problem as precisely as possible;
-4. **Better version** — one or more alternatives;
-5. **Candidate judgment function** — what decision should change before generation;
-6. **Boundary conditions** — when the original construction would actually be legitimate;
-7. **Scope** — core semantic rule, Chinese-expression rule, dialogue rule, scenario rule, or personal taste;
-8. **Benchmark value** — whether this deserves a regression case.
+尽量包含：
 
-A useful pattern is:
+1. **Context / prompt** — 当时在写什么、讨论什么；
+2. **Original output** — 哪一句让人觉得不对；
+3. **Why it fails** — 精确描述语义、证据、互动或 scope 问题；
+4. **Better version** — 一个或多个更好的版本；
+5. **Candidate judgment function** — 生成前哪个判断需要改变；
+6. **Boundary conditions** — 原来的表达什么时候其实成立；
+7. **Scope** — core semantic、Chinese expression、interaction、scenario 或 house style；
+8. **Benchmark value** — 是否值得做 regression case。
 
-> taste reaction → articulation → rule → example → benchmark → revision
+推荐路径：
 
-## Contribution principles
+> taste reaction → articulation → candidate rule → boundary → benchmark → repeated validation → revision
 
-- Do not turn a disliked phrase into a universal ban without explaining the mechanism.
-- Prefer conditional gates over word blacklists.
-- Preserve evidence boundaries; do not add invented facts to make examples vivid.
-- Distinguish a personal voice preference from a general Chinese-generation failure.
-- Keep authorial stance, uncertainty, and agency intact.
-- Include counterexamples when a rule could easily overreach.
+## 贡献原则
+
+- 不把“不喜欢这个词”直接变成普遍禁令；
+- 优先写 conditional gate，而不是词表 blacklist；
+- 保留证据边界，不为了例子鲜活而补事实；
+- 区分个人声音偏好与可迁移的中文生成失败；
+- 保留作者立场、不确定性与 agency；
+- 容易误伤合法表达的规则必须提供反例；
+- 规则可以升级，也可以降级或迁移到 extension。
+
+## 修改 core 时
+
+Core 变化需要回答：
+
+1. 哪个可复现 failure 促成了修改？
+2. 它是否跨作者/跨场景成立？
+3. 新规则会误伤什么？
+4. 是否新增或更新 benchmark？
+5. 哪些下游 vendored profile 需要 drift review？
+
+## 修改 extension 时
+
+说明它属于哪个作者、persona 或场景。Extension 可以很有个性，不需要假装通用。
 
 ## Versioning
 
-Patch releases may add examples, benchmarks, clarifications, or narrow fixes.
-
-Minor releases may add or significantly revise rule modules while keeping the overall philosophy compatible.
-
-Major releases are reserved for changes to the underlying generation philosophy or rule architecture.
+- Patch：例子、benchmark、边界澄清、窄修复；
+- Minor：兼容总体 philosophy 的规则模块新增或重构；
+- Major：底层生成 philosophy 或 rule architecture 改变。
