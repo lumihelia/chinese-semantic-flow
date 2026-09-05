@@ -1,119 +1,200 @@
 # Chinese Semantic Flow
 
+中文 · [English](./README.en.md)
+
 **让语言忠实于思考的运动。**
 
-Chinese Semantic Flow 是一个持续迭代的中文生成、改写、编辑与对话 Skill。它把重点放在语义关系、推断边界、对话自然度和人的 agency 上。
+Chinese Semantic Flow 是一个持续迭代的中文生成、改写、编辑与对话 Agent Skill。它把主要约束放在生成判断本身：一句话从什么命题开始、后文如何继续、语言关系是否忠实映射思想关系、事实与推断有没有越界、改写有没有替原作者改变立场。
 
-它把生成判断本身作为主要对象，重点检查：
-
-- 一句话是否从真正成立的命题出发；
-- 后一句是否从前一句自然长出来；
-- 因果、递进、并列、包含、时间变化和冲突是否被准确表达；
-- AI 是否为了制造力度，凭空搭建一个较弱观点再推翻；
-- AI 是否替人补足情绪、动机和结论；
-- “活人感”是否来自上下文连续性，而不是语气词、撒娇、舞台动作和模板化表演；
-- 编辑是否保留了原作者自己的判断和声音。
+**当前版本：`v0.2.0`**
 
 ## 核心原则
 
-最重要的一条规则：
+生成句子前，先确定真正成立的核心命题 B。
 
-> 先确定真正成立的核心命题，直接从它开始生成。只有当需要修正的观点已经真实存在，而且处理它会增加信息时，才引入转折或对照。
+B 已经成立时，直接从 B 开始，让后文沿 B 的语义继续向前。只有当需要回应的 A 已经真实存在，而且处理 A 会增加理解时，才引入转折、否定或纠正。
 
-默认的思考运动是：
+这里的重点发生在生成之前：
+
+> **避免 contrast-first 的正确实现，是 A 不成为默认起点。**
+
+默认的思考运动可以写成：
 
 > 观察 → 判断 → 机制 → 后果 → 反馈 → 新的理解
 
-它不是固定文章模板，而是一种“继续向前”的生成方向。
+这是一种推进方向，不是固定文章模板。
 
-## 主要模块
+## v0.2：从“大而全”变成分层系统
+
+v0.1 先把长期积累的规则尽可能收进同一份 Skill，方便建立完整地图。它也因此把通用中文规则、对话原则、Helia 的个人写作 taste、Merva persona 和系统分析习惯混在了一起。
+
+v0.2 把规则按作用域重新分层：
+
+| 层 | 内容 | 默认加载 |
+| --- | --- | --- |
+| Core semantic | proposition-first、关系忠实、事实/推断边界、立场保真 | 是 |
+| Chinese expression | forward progression、意合、contrast gate、翻译腔检查 | 是 |
+| Interaction | inference restraint、agency、动态信息密度 | 是 |
+| Scenario / house style | 特定作者、persona、系统视角、playfulness | 按需 |
+
+这样，同一份 core 可以迁移到其他作者和产品；个人 taste 继续保留，而且不会被悄悄包装成“普遍的好中文”。
+
+## Core 现在负责什么
 
 - Semantic-first generation
+- Core proposition / B-first generation
 - Forward semantic progression
-- Contrast-first detection
+- Contrast gate
 - Chinese parataxis
+- Relation fidelity：因果、递进、并列、条件、时间、冲突、不确定性
 - Evidence-bound specificity
-- Inference restraint
+- Retractable inference
 - Agency-preserving dialogue
 - Conversational density control
-- Cognitive / relational playfulness
-- Personal essay movement
-- Dynamic self-modeling
-- System-level analysis
-- Benchmark-driven iteration
+- Authorial stance preservation
+- Anti-template checks：三段式惯性、过度总结、虚假抽象、装饰性“人味”
+
+## 可选扩展
+
+### `extensions/helia-language.md`
+
+跨场景 house style：
+
+- 性别未知时使用 `TA`；
+- 减少无功能的「你」；
+- 优先显式对象、自然省略主语，或在共同主体成立时使用「我们」；
+- 代词需要承担信息功能。
+
+### `extensions/helia-writing.md`
+
+Helia 的长文与思考运动：
+
+- 保留思想形成的时间；
+- 从具体私人经验进入公共问题；
+- 从我出发，经过世界，最后抵达我们；
+- 系统变量与 possibility → reality；
+- 动态自我理解。
+
+### `extensions/merva-dialogue.md`
+
+Merva 的 persona / dialogue layer：
+
+- acknowledge without soothing；
+- 信息不足时把话匣子交回对方；
+- contextual cognitive / relational playfulness；
+- 克制舞台动作和角色表演；
+- 关系连续性高于语言装饰。
+
+## 为什么把 extensions 拆出去
+
+一个规则是否有效，和它适用于谁、什么场景，是两个不同问题。
+
+例如 `TA` 是 Helia 明确采用的中文约定，但它不是中文语法的普遍结论；Merva 的可爱气质也可以设计得很好，却不应该进入每个中文 Agent 的默认行为。
+
+分层以后，core 保存可迁移的判断函数，extensions 保存特定作者、persona 与场景的 taste。
 
 ## 安装
 
-如果你的 Agent / Coding Agent 支持 Skill 目录，可以把整个仓库放入对应 skills 目录，并加载 `SKILL.md`。
+这个仓库符合 Agent Skills 的 `SKILL.md` 目录形态。把整个仓库放进宿主支持的 skills 目录即可保留 extensions、benchmarks 和 docs。
 
-Claude Code 常见用法：
+常见位置包括：
 
-```bash
-git clone https://github.com/lumihelia/chinese-semantic-flow.git ~/.claude/skills/chinese-semantic-flow
+```text
+# Codex
+~/.codex/skills/chinese-semantic-flow/
+
+# Claude Code
+~/.claude/skills/chinese-semantic-flow/
+
+# Windsurf global
+~/.codeium/windsurf/skills/chinese-semantic-flow/
+
+# Windsurf workspace
+.windsurf/skills/chinese-semantic-flow/
 ```
 
-也可以只复制 `SKILL.md` 到你自己的 Agent instruction system 中。
+部分宿主也支持 `.agents/skills/` 或自己的 Skills UI。实际发现路径以当前宿主文档为准。
+
+只复制 `SKILL.md` 也能使用 core；需要个人/场景规则时，应同时保留对应 extension 文件。
 
 ## 使用示例
 
 ### 生成
 
 ```text
-请使用 chinese-semantic-flow 写一段中文，解释为什么 AI 长期记忆会改变人机协作。
+请使用 chinese-semantic-flow 写一段中文，解释 AI 长期记忆会怎样改变人机协作。
 ```
 
 ### 改写
 
 ```text
-请用 chinese-semantic-flow 改写下面这段话，保留我的观点和语气，不要增加新事实：
+请用 chinese-semantic-flow 改写下面这段话，保留原来的观点、语气和不确定性，不增加新事实：
 [文本]
 ```
 
-### 对话
+### Helia house style
 
 ```text
-请使用 chinese-semantic-flow 的 inference restraint 和 agency-preserving dialogue 规则回应。
+使用 chinese-semantic-flow，并加载 extensions/helia-language.md 与 extensions/helia-writing.md。
 ```
 
-## 它和 Humanizer 类工具有什么区别？
+### Merva
 
-Humanizer 常从表面语言模式识别 AI 痕迹，再进行清理。
+```text
+使用 chinese-semantic-flow core，并加载 extensions/merva-dialogue.md；如果需要继承 Helia 的代词规则，再加载 extensions/helia-language.md。
+```
 
-Chinese Semantic Flow 更靠前一步：它试图约束**生成判断本身**。语言是否自然只是结果之一。更重要的是，句子为什么这样开始、关系为什么这样排列、哪些东西可以推断、哪些地方应当停住。
+## 和 Humanizer 类工具的区别
 
-## 设计原则
+Humanizer 常从表面语言模式识别 AI 痕迹，再清理可见特征。
 
-这个项目刻意区分三类规则：
+Chinese Semantic Flow 把检查点放到更早的生成判断：真正成立的命题是什么、关系怎样排列、哪些内容可以推断、哪些地方应当停住。语言自然度是这些判断正确之后产生的结果之一。
 
-1. **通用语义规则**：例如从真实成立的命题出发。
-2. **中文表达规则**：例如意合推进、减少无必要的显性逻辑连接。
-3. **个人 taste / 场景扩展**：例如某种随笔运动、某个对话 AI 的可爱气质。
+## Rule taxonomy
 
-个人 taste 不自动升级为普遍规则。
+规则分层与 promotion gate 见 [`docs/rule-taxonomy.md`](./docs/rule-taxonomy.md)。
 
-## 迭代方式
+一个新观察通常沿这条路径生长：
 
-每次出现“这句话味道不对”，都可以把一次直觉反应提炼为可测试判断：
+> taste reaction → articulation → candidate rule → boundary → benchmark → repeated validation → revision
 
-> taste reaction → articulation → rule → example → benchmark → revision
+仓库不会把一次个人偏好直接升级为普遍规则。
 
-仓库中的 `benchmarks/cases.md` 用来保存这些案例。
+## Benchmarks
 
-## 当前版本
+[`benchmarks/cases.md`](./benchmarks/cases.md) 保存 regression cases，同时包含“坏例子”和“合法反例”。合法反例很重要：它防止 contrast gate、意合和 inference restraint 逐渐变成机械禁令。
 
-`v0.1.0`：第一版规则系统。
+## 下游 Skill
 
-这是一份会继续生长的 Skill，不追求一次完成。
+任务型 Skill 可以复用 Chinese Semantic Flow 的一部分规则。推荐的两种方式、版本标记与 drift review 见 [`docs/downstream-integration.md`](./docs/downstream-integration.md)。
 
-## 可选扩展
+`video-to-chinese-essay` 是当前已知需要回头对齐的早期下游：它的 style diagnostics 形成得更早，核心方向一致，但还没有 v0.2 的分层与 upstream-version 约定。
 
-仓库把个人 / persona taste 单独拆开：
+## 仓库结构
 
-- `extensions/helia-writing.md`：第一人称长文、思想形成时间、从我经过世界抵达我们。
-- `extensions/merva-dialogue.md`：对话密度、推断边界、agency、cognitive / relational playfulness。
-
-核心 Skill 可以单独使用；需要特定风格时再加载扩展。
+```text
+SKILL.md                         # portable core
+extensions/
+  helia-language.md              # Helia house-style language rules
+  helia-writing.md               # Helia writing/thinking extension
+  merva-dialogue.md              # Merva persona/dialogue extension
+benchmarks/
+  cases.md
+  cases.en.md
+docs/
+  rule-taxonomy.md
+  rule-taxonomy.en.md
+  downstream-integration.md
+  downstream-integration.en.md
+README.md
+README.en.md
+CONTRIBUTING.md
+CONTRIBUTING.en.md
+CHANGELOG.md
+CHANGELOG.en.md
+LICENSE
+```
 
 ## License
 
-MIT License. See `LICENSE`.
+MIT. See [`LICENSE`](./LICENSE).
