@@ -2,6 +2,16 @@
 
 [中文](./CHANGELOG.md) · English
 
+## v0.4.2
+
+The repository's Chinese was checked sentence by sentence against its own rules.
+
+- §15 clarification: rendering an English fixed phrase word by word is also translationese (e.g. gold standard → 金标准; Chinese says 标准答案).
+- The rule taxonomy now states the v0.4 contrast check (A must be traceable to the text).
+- Six `Better` / `Valid` examples in the regression cases carried English sentence skeletons; the originals stay, each followed by a language review and a revision awaiting author judgment. Case 013 drops an analysis the author's judgment had overturned.
+- Rule names, headings, and ordinary words in Chinese prose now use Chinese; only component names (core, extension, persona, benchmark) and data field names stay in English.
+- The rubric, failure taxonomy, and evaluation guide were rewritten in more natural Chinese without changing any criterion.
+
 ## v0.4.1 — first public release
 
 - The repository is public and contains only the core Skill, core benchmarks, the diagnostic toolkit, and docs. Personal extensions, author calibration records, and research experiments stay in the author's private repository.

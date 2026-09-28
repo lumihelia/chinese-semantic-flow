@@ -126,6 +126,6 @@ AI-ish: `写下来的问题，彼此怎么相连`
 
 Author revision: `那些写下来的问题，它们是怎么连起来的？`
 
-The compressed line keeps a noun-phrase topic and a stative reciprocal verb: no result complement, redundant `彼此` with `相连`, an unanchored generic topic, and a lost question mark. Legal counterexamples: navigation labels such as `问题地图` and `思想年表` are nominal by design. The author also accepted `写下来的问题是怎么连起来的？` (without `那些` or `它们`), so neither anchoring nor resumption is necessary. She later added that this version is more natural and suits most written presentation, while her own is more colloquial.
+The compressed line keeps a noun-phrase topic and a stative reciprocal verb: no result complement, redundant `彼此` with `相连`, and a lost question mark. Legal counterexamples: navigation labels such as `问题地图` and `思想年表` are nominal by design. The author also accepted `写下来的问题是怎么连起来的？` (without `那些` or `它们`), so neither anchoring nor resumption is necessary. She later added that this version is more natural and suits most written presentation, while her own is more colloquial.
 
 Rule: Core 4.2 — compress modifiers and argument, not the event.

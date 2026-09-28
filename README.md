@@ -4,112 +4,111 @@
 
 **让语言忠实于思考的运动。**
 
-Chinese Semantic Flow 是一个持续迭代的中文生成、改写、编辑与对话 Agent Skill。它把主要约束放在生成判断本身：一句话从什么命题开始、后文如何继续、语言关系是否忠实映射思想关系、中文句法与信息顺序是否自然、事实与推断有没有越界、改写有没有替原作者改变立场。
+Chinese Semantic Flow 是一个持续迭代的 Agent Skill，用于中文的生成、改写、编辑与对话。它把力气花在下笔之前的判断上：一句话从什么命题开始，后文怎样接下去，语言里的关系是否对得上思想里的关系，句法和信息顺序是否像中文，事实和推断有没有越界，改写有没有替原作者改了立场。
 
-**当前版本：`v0.4.1`**
+**当前版本：`v0.4.2`**
 
-仓库包含 core Skill、可追溯的 regression cases 与一套不调用模型的诊断评估工具。当前尚未证明 core 的跨来源质量收益；`Better` 只代表仓库当前的判断，不能当作标准答案。
+仓库里有 core Skill、可以追溯来源的回归案例，以及一套不调用模型的诊断评估工具。core 能不能在不同来源上稳定地提高质量，目前还没有证明；`Better` 只代表仓库当前的判断，不能当作标准答案。
 
 ## 核心原则
 
-生成句子前，先确定真正成立的核心命题 B。
+写一句话之前，先确定真正成立的核心命题 B。
 
-B 已经成立时，直接表达 B，让后文沿 B 的语义继续向前。只有当需要回应的 A 能指向文本依据，而且处理 A 会增加理解时，才引入转折、否定或纠正；说不出依据时，默认从 B 生成。
+B 已经成立时，直接说 B，让后文沿着它往前走。只有当要回应的 A 能在文本里找到依据，处理它又能增加理解时，才用转折、否定或纠正；说不出依据时，就从 B 开始写。
 
-这里的重点发生在生成之前：
+关键在下笔之前：
 
-> **避免 contrast-first 的正确实现，是 A 不成为默认起点。**
+> **A 不应当成为默认的起点。**
 
-默认的思考运动可以写成：
+常见的推进方向是：
 
 > 观察 → 判断 → 机制 → 后果 → 反馈 → 新的理解
 
-这是一种推进方向，不是固定文章模板。B 只需要在写之前想清楚，输出从哪里开始由文体决定。
+这是方向，不是文章模板。B 只需要在写之前想清楚，文章从哪里开始，由文体决定。
 
-## v0.4：分层、门控与正面形状
+## v0.4：分层、对照检查与正面示例
 
-v0.4 回应了一轮外部评审，并经过一次作者校准：
+v0.4 回应了一轮外部评审，并做了一次作者校准：
 
-- **高杠杆规则**：B 与对照 gate、中文原生句法、证据边界、立场不漂移四组为核心；其余为 supporting，任务触发时同样是核心；
-- **分层自检**：每次必查 4 问，其余按生成、改写、对话、压缩成 UI 文案、加载 extension 触发；自检不往输出里加内容；
-- **门控看文本依据**：A 必须能指向文本，说不出依据时默认从 B 生成；
-- **B-first 操作化**：B 在规划里成立即可，不要求文章把结论放在开头；
-- **冲突优先级**与“半成型 vs 机制”的判定写入 `docs/rule-taxonomy.md` 与 core §5；
-- **正面形状**（core §5.1）：解释文、产品文案、对话三个经作者选择或改写的示例；
-- 解释因果链时，显性连接词常常承担真实关系，为“意合”删掉会让机制链断开。
+- **高杠杆规则**：B 与对照检查、中文原生句法、证据边界、立场不漂移，这四组是核心；其余是辅助规则，任务用到时同样是核心；
+- **分层自检**：每次必查四问，其余按生成、改写、对话、压缩成 UI 文案、加载 extension 分别触发；自检不往输出里加内容；
+- **对照要有文本依据**：A 必须能在文本里找到，说不出依据时从 B 开始写；
+- **“B 先行”说清楚了做法**：B 在规划里成立就够，不要求文章把结论放在开头；
+- **冲突优先级**，以及“半成型想法”和“机制先于口号”之间怎么裁决，写进了 `docs/rule-taxonomy.md` 和 core §5；
+- **正面示例**（core §5.1）：解释文、产品文案、对话各一，都经过作者选择或改写；
+- 解释因果链时，显性连接词常常承担真实的关系，为了“意合”删掉它们，机制链就断了。
 
-## v0.3：把“翻译腔”推进到句法与信息结构层
+## v0.3：把“翻译腔”的检查推进到句法和信息结构
 
-v0.3 增加一条新的 core 判断：**中文写作需要按中文自身的句法、篇章信息结构与注意力顺序组织句子。**
+v0.3 增加了一条 core 判断：**中文写作要按中文自己的句法、篇章信息结构和注意力顺序来组织句子。**
 
-过去对“翻译腔”的检查容易停在词汇、连接词、名词化和被动语态。更深的一层是：模型可能先按英语习惯形成一个完整 proposition，再把词替换成中文。这样即使每个词都正确，句子的视角、动作顺序、话题推进和信息落点仍然可能带着英语骨架。
+过去对“翻译腔”的检查，容易停在词汇、连接词、名词化和被动语态上。更深的一层是：模型可能先按英语习惯排好一个完整命题，再把词换成中文。这样即使每个词都对，句子的视角、动作顺序、话题推进和信息落点，仍然带着英语的骨架。
 
 例如：
 
 > 投影、追踪、巨型灯光这些技术，平时很容易出现在广告、商业活动中。
 
-在强调人的日常感知时，可以自然写成：
+想强调人的日常感知时，可以自然地写成：
 
 > 我们平时经常在广告、商业活动中看到类似投影、追踪、巨型灯光这些技术。
 
-这里没有产生“人必须放句首”的新模板。时间、地点、范围或话题承担真实 framing function 时，仍然可以自然前置：
+这并不意味着“人物必须放在句首”。时间、地点、范围或前文的话题，确实在为句子搭框架时，照样可以放在前面：
 
 > 到了晚上，一整面建筑外墙会出现互动投影。
 
 > 在 Body Movies 中，我们只需要走进光里，在墙上留下影子。
 
-因此 v0.3 真正要求的是：
+所以 v0.3 真正要求的是：
 
-> **让语序服务于中文语境中的已知 / 新信息、话题 / 述题、时间地点框架、动作关系和注意力移动。**
+> **让语序服务于中文语境里的已知 / 新信息、话题 / 述题、时间地点框架、动作关系和注意力移动。**
 
-一句简化提醒：
+一句话记住它：
 
 > **先用中文理解这句话里的世界，再用中文安排这个世界。**
 
-## v0.2：从“大而全”变成分层系统
+## v0.2：从“大而全”到分层
 
-v0.1 先把长期积累的规则尽可能收进同一份 Skill，方便建立完整地图。它也因此把通用中文规则、对话原则、个人写作 taste、persona 规则和系统分析习惯混在了一起。
+v0.1 把长期积累的规则尽量收进同一份 Skill，好先看清全貌。代价是通用的中文规则、对话原则、个人写作偏好、persona 规则和系统分析的习惯都混在了一起。
 
-v0.2 把规则按作用域重新分层：
+v0.2 按适用范围重新分层：
 
 | 层 | 内容 | 默认加载 |
 | --- | --- | --- |
-| Core semantic | proposition-first、关系忠实、事实/推断边界、立场保真 | 是 |
-| Chinese expression | forward progression、意合、中文原生句法与信息结构、contrast gate、翻译腔检查 | 是 |
-| Interaction | inference restraint、agency、动态信息密度 | 是 |
-| Scenario / house style | 特定作者、persona、系统视角、playfulness | 按需 |
+| 核心语义 | 先有命题、关系保真、事实与推断的边界、立场保真 | 是 |
+| 中文表达 | 语义向前推进、意合、中文原生句法与信息结构、对照检查、翻译腔检查 | 是 |
+| 互动 | 不替对方补推断、判定权留给对方、信息密度随互动变化 | 是 |
+| 场景与个人文风 | 特定作者、persona、系统视角、俏皮 | 按需 |
 
-这样，同一份 core 可以迁移到其他作者和产品；个人 taste 继续保留，而且不会被悄悄包装成“普遍的好中文”。
+这样，同一份 core 可以用在别的作者和产品上；个人偏好也照样保留，只是不会被悄悄说成所有人都该遵守的写法。
 
-## Core 现在负责什么
+## Core 负责什么
 
-- Semantic-first generation
-- Core proposition / B-first generation
-- Forward semantic progression
-- Chinese-native syntax and discourse information order
-- Contrast gate
-- Chinese parataxis
-- Relation fidelity：因果、递进、并列、条件、时间、冲突、不确定性
-- Evidence-bound specificity
-- Retractable inference
-- Agency-preserving dialogue
-- Conversational density control
-- Authorial stance preservation
-- Anti-template checks：三段式惯性、过度总结、虚假抽象、装饰性“人味”
+- 语义优先的生成：先有核心命题，“B 先行”
+- 语义向前推进
+- 中文原生句法与篇章信息顺序
+- 对照检查
+- 意合，以及承担真实关系的连接词
+- 关系保真：因果、递进、并列、条件、时间、冲突、不确定性
+- 具体化必须有来源
+- 推断保持可撤回
+- 把判定权留给对方的对话
+- 对话密度随互动阶段变化
+- 改写时保留作者的立场
+- 反模板检查：三段式惯性、过度总结、虚假的抽象、装饰出来的“人味”
 
-## Extensions
+## Extension
 
-Core 不携带个人 taste。某位作者的代词约定、长文运动，或某个对话 persona 的语气与安抚边界，写成单独的 extension，按需加载。
+Core 不带任何个人偏好。某位作者的代词约定、长文推进方式，或某个对话 persona 的语气与安抚分寸，写成单独的 extension，按需加载。
 
-一个规则是否有效，和它适用于谁、什么场景，是两个不同问题。例如“性别未知时用 TA”可以是某位作者明确采用的约定，却不是中文语法的普遍结论。
+一条规则有没有道理，和它适用于谁、什么场景，是两个问题。比如“性别未知时用 TA”，可以是某位作者明确采用的约定，却不是中文语法的普遍结论。
 
-本仓库不包含个人 extension。写法见 [`docs/writing-extensions.md`](./docs/writing-extensions.md)。
+本仓库不包含个人 extension，写法见 [`docs/writing-extensions.md`](./docs/writing-extensions.md)。
 
 ## 安装
 
-这个仓库符合 Agent Skills 的 `SKILL.md` 目录形态。把整个仓库放进宿主支持的 skills 目录即可保留 benchmarks 和 docs。
+这个仓库符合 Agent Skills 的 `SKILL.md` 目录结构。把整个仓库放进宿主支持的 skills 目录，benchmarks 和 docs 也会一起保留。
 
-常见位置包括：
+常见位置：
 
 ```text
 # Codex
@@ -125,9 +124,9 @@ Core 不携带个人 taste。某位作者的代词约定、长文运动，或某
 .windsurf/skills/chinese-semantic-flow/
 ```
 
-部分宿主也支持 `.agents/skills/` 或自己的 Skills UI。实际发现路径以当前宿主文档为准。
+有些宿主也支持 `.agents/skills/`，或有自己的 Skills 界面。具体的发现路径以宿主当前的文档为准。
 
-只复制 `SKILL.md` 也能使用 core。个人或场景规则写成自己的 extension，与 core 一起加载。
+只复制 `SKILL.md` 也能用 core。个人或场景规则写成自己的 extension，和 core 一起加载。
 
 ## 使用示例
 
@@ -150,21 +149,21 @@ Core 不携带个人 taste。某位作者的代词约定、长文运动，或某
 使用 chinese-semantic-flow，并加载 extensions/my-house-style.md。
 ```
 
-## Rule taxonomy
+## 规则分层
 
-规则分层、冲突优先级与 promotion gate 见 [`docs/rule-taxonomy.md`](./docs/rule-taxonomy.md)。
+规则分层、冲突优先级和升级检查，见 [`docs/rule-taxonomy.md`](./docs/rule-taxonomy.md)。
 
-一个新观察通常沿这条路径生长：
+一个新观察通常这样长成规则：
 
-> taste reaction → articulation → candidate rule → boundary → benchmark → repeated validation → revision
+> “味道不对”的反应 → 说清楚 → 候选规则 → 边界 → 回归案例 → 反复验证 → 修订
 
-仓库不会把一次个人偏好直接升级为普遍规则。v0.3 的 information-order rule 同时保存了 person-first 的反例，用来防止新领悟重新硬化成模板。
+仓库不会因为一次个人偏好，就把它升级成普遍规则。v0.3 的信息顺序规则同时保存了“人物先行”的反例，防止新的领悟又硬化成模板。
 
-## Benchmarks 与评估
+## 回归案例与评估
 
-[`benchmarks/cases.md`](./benchmarks/cases.md) 保存 regression cases，同时包含“坏例子”和“合法反例”。合法反例防止 contrast gate、意合、information order 和 inference restraint 逐渐变成机械禁令。
+[`benchmarks/cases.md`](./benchmarks/cases.md) 保存回归案例，既有“坏例子”，也有成立的反例。成立的反例防止对照检查、意合、信息顺序和推断克制这些规则，慢慢变成机械的禁令。
 
-[`evaluation/`](./evaluation/README.md) 把这些判断转成可盲评的诊断数据：34 个 core 案例、固定版本的规则摘录、六维 rubric 和只用 Python 标准库的 harness。它不调用模型，也不给中文打自动分。
+[`evaluation/`](./evaluation/README.md) 把这些判断变成可以盲评的诊断数据：34 个 core 案例、固定版本的规则摘录、六个维度的评分细则，以及只用 Python 标准库写成的评测工具。它不调用模型，也不给中文自动打分。
 
 ```sh
 python3 -m evaluation.harness validate
@@ -173,25 +172,25 @@ python3 -m unittest discover -s tests -v
 
 ## 下游 Skill
 
-任务型 Skill 可以复用 Chinese Semantic Flow 的一部分规则。推荐的两种方式、版本标记与 drift review 见 [`docs/downstream-integration.md`](./docs/downstream-integration.md)。不要无标记复制 core。
+任务型 Skill 可以只用 Chinese Semantic Flow 的一部分规则。两种推荐接法、版本标记和漂移检查，见 [`docs/downstream-integration.md`](./docs/downstream-integration.md)。复制规则时请做好标记。
 
-## 贡献
+## 参与贡献
 
-最有价值的贡献是一个具体的 judgment case：哪句话不对、为什么、更好的版本、边界与合法反例。见 [`CONTRIBUTING.md`](./CONTRIBUTING.md)。
+最有价值的贡献是一个具体的判断案例：哪句话不对，为什么不对，更好的版本，边界在哪里，有没有成立的反例。见 [`CONTRIBUTING.md`](./CONTRIBUTING.md)。
 
 ## 仓库结构
 
 ```text
 SKILL.md                        # core Skill
 docs/
-  rule-taxonomy.md              # 规则分层、冲突优先级、promotion gate
-  native-chinese-regrounding.md # 中文重新着地（candidate core elaboration）
+  rule-taxonomy.md              # 规则分层、冲突优先级、升级检查
+  native-chinese-regrounding.md # 中文重新着地（候选的 core 补充说明）
   downstream-integration.md
   writing-extensions.md
 benchmarks/
   cases.md
-  data/                         # 诊断案例与固定版本来源摘录
-evaluation/                     # rubric、数据契约与诊断工具
+  data/                         # 诊断案例与固定版本的来源摘录
+evaluation/                     # 评分细则、数据格式与诊断工具
 tests/
 README.md / README.en.md
 CONTRIBUTING.md / CONTRIBUTING.en.md
@@ -199,6 +198,6 @@ CHANGELOG.md / CHANGELOG.en.md
 LICENSE
 ```
 
-## License
+## 许可证
 
 MIT

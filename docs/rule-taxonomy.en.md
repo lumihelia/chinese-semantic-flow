@@ -20,7 +20,7 @@ Recurring Chinese-generation tendencies that remain falsifiable:
 
 - prefer semantic continuity over mechanical connective scaffolding;
 - let action, time, causality, and context carry relations when explicit connectors are unnecessary;
-- gate contrast-first constructions on whether A actually exists;
+- gate contrast on whether A can be traced to the text; without a basis, state B;
 - avoid importing an English argumentative skeleton when Chinese can move naturally by parataxis.
 
 Frequent model misuse does not make a construction inherently forbidden.

@@ -6,7 +6,7 @@
 
 Chinese Semantic Flow is an evolving Agent Skill for Chinese generation, rewriting, editing, and dialogue. It focuses on generation decisions before surface style: what proposition a sentence starts from, how the next sentence grows from it, whether linguistic relations match the underlying reasoning, whether Chinese syntax and information order fit the discourse, whether evidence and inference remain distinct, and whether a rewrite preserves the author's stance.
 
-**Current version: `v0.4.1`**
+**Current version: `v0.4.2`**
 
 The repository contains the core Skill, traceable regression cases, and a diagnostic evaluation toolkit that never calls a model. A cross-source quality benefit from the core has not been established; `Better` labels are repository judgments, not gold keys.
 

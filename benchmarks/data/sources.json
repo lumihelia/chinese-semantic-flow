@@ -1,220 +1,220 @@
 {
  "schema_version": 1,
- "baseline_commit": "e48aed529701123d2ea6e9f09dbacd08f3abf9d3",
+ "baseline_commit": "0a6a254d41228cc26df022196e253ebec0d4d00a",
  "sources": [
   {
    "id": "r-contrast",
    "path": "SKILL.md",
-   "start_line": 32,
-   "end_line": 57,
-   "quote": "## 0. 总原则：先确定 B\n\n生成一句话之前，先确定真正要表达的核心命题 B。\n\n如果 B 本身已经成立，就直接表达 B，让后文沿 B 的语义继续向前。\n\n准备引入转折、否定、纠正或对照时，再检查被修正的命题 A 能否指向文本：\n\n- 当前上下文；\n- 对方说过的话；\n- 材料里确实包含的争议或冲突；\n- 能说出出处、且与当前任务直接相关的现实误解。\n\nA 有依据，而且处理 A 会增加理解时，转折结构才承担信息功能。\n\n**说不出依据时，默认从 B 生成。** 两种错误的代价不对称：该用对照时直说 B，损失很小；没有 A 却用了对照，会凭空造出一个对手。作者心里知道某个真实误解、只是没写出处时，这条会压掉一次合法对照，补一句出处即可恢复。\n\n这里的 gate 针对引入对立观点的纠正或对照。直接表达有依据的否定事实（如“取消操作不会删除已保存的文件”）不需要先有一个错误观点 A。评估任务限定只能使用给定材料时，不自行补出现实误解。\n\n**写第一句之前，能用一句话说出 B；B 可以只存在于规划里。** 输出从哪里开始，由文体决定：随笔可以从一个具体场景写起，到后面才让 B 成形；说明文、产品文案和回答问题时，B 放在开头往往就是最好的写法。B-first 约束的是对照结构的来源，不要求文章把结论放在开头。单次生成里，这只能近似做到；评估只看可观察行为：输出里有没有无来源的 A。\n\n默认的语义运动可以写成：\n\n**观察 → 判断 → 机制 → 后果 → 反馈 → 新的理解**\n\n这是一种方向，不是固定文章模板。",
-   "sha256": "89bc6d94ee2674967dc75d098312254a253b6f08659273cee5f0bbecc8adf172"
+   "start_line": 19,
+   "end_line": 45,
+   "quote": "## 0. 总原则：先确定 B\n\n生成一句话之前，先确定真正要表达的核心命题 B。\n\n如果 B 本身已经成立，就直接从 B 开始生成，让后文沿 B 的语义继续向前。\n\n准备引入转折、否定、纠正或对照时，再检查被修正的命题 A 是否真实存在于：\n\n- 当前上下文；\n- 对方已经表达的观点；\n- 明确可识别的读者预期；\n- 当前材料确实包含的争议或冲突；\n- 已知且与当前任务直接相关的现实误解。\n\nA 真实存在，而且处理 A 会增加理解时，转折结构才承担信息功能。\n\n**避免 contrast-first 的正确实现，是生成过程从 B 起步；不要先默认生成 A，再把 A 删除。**\n\n默认的语义运动可以写成：\n\n**观察 → 判断 → 机制 → 后果 → 反馈 → 新的理解**\n\n这是一种方向，不是固定文章模板。\n\n---\n\n# Part I：核心语义规则",
+   "sha256": "6d0972c0fc20e8b54905801f0cde176449ec49f688ff9cfbb786d684cd2bb7ad"
   },
   {
    "id": "r-relation",
    "path": "SKILL.md",
-   "start_line": 105,
-   "end_line": 116,
+   "start_line": 89,
+   "end_line": 100,
    "quote": "## 3. 语言关系映射思想关系\n\n先判断关系，再选择表达方式。\n\n- **包含**：展开包含关系，不把包含写成对立。\n- **因果**：说明什么变化通过什么机制带来什么结果。\n- **递进**：让进一步后果沿已有判断自然长出。\n- **并列**：多个维度同等重要时直接并置。\n- **条件**：判断只在特定条件成立时，把条件写出来。\n- **时间变化**：观点逐渐形成时，保留形成过程。\n- **冲突**：真实冲突存在时，再使用强转折。\n- **不确定性**：证据不足时保留概率、候选和未知。",
    "sha256": "074b85f209efd79bf84f2328eceda1d857b7490625ca27ad1f9e4442afee205d"
   },
   {
    "id": "r-parataxis",
    "path": "SKILL.md",
-   "start_line": 118,
-   "end_line": 135,
-   "quote": "## 4. 中文意合优先\n\n关系已经能由动作、时间、因果和上下文看出时，不必反复添加显性连接词。\n\n警惕机械堆叠：\n\n- 此外\n- 与此同时\n- 因此\n- 然而\n- 值得注意的是\n- 更重要的是\n- 从某种意义上说\n- 综上所述\n\n这些词可以使用。判断标准是它是否承担了真实关系，而不是它是否出现在黑名单里。\n\n反方向同样会出错。解释因果链、机制或先后步骤时，“因为 / 然后 / 于是 / 所以”这类连接词常常承担真实关系；为了“意合”把它们都删掉，机制链会断开，读者反而要自己补。见 §5.1 的解释文示例。",
-   "sha256": "b87337ca6e80f7957828dd9a0341d0f4f196158ddb3995c20951b85c66883715"
+   "start_line": 102,
+   "end_line": 117,
+   "quote": "## 4. 中文意合优先\n\n关系已经能由动作、时间、因果和上下文看出时，不必反复添加显性连接词。\n\n警惕机械堆叠：\n\n- 此外\n- 与此同时\n- 因此\n- 然而\n- 值得注意的是\n- 更重要的是\n- 从某种意义上说\n- 综上所述\n\n这些词可以使用。判断标准是它是否承担了真实关系，而不是它是否出现在黑名单里。",
+   "sha256": "4d2857f0db38976fb693770400dc1f0a41b70cbf831eb9032e463002ac5499f2"
   },
   {
    "id": "r-order",
    "path": "SKILL.md",
-   "start_line": 137,
-   "end_line": 187,
-   "quote": "## 4.1 中文原生句法与信息结构\n\n中文写作不只需要中文词汇，还需要按中文自身的句法与篇章信息结构组织句子。\n\n警惕一种更深的翻译腔：模型先按英语习惯形成完整 proposition，再把词语替换成中文。最终每个词都可能正确，句子的视角、动作顺序、话题推进和信息落点仍然带着英语骨架。\n\n生成中文句子时，先问：\n\n1. 当前篇章里什么已经是已知信息？\n2. 这句话真正要新增什么？\n3. 当前更自然的起点是人物、动作、时间、地点、话题，还是结果？\n4. 谁在做什么？动作怎样发生？人的感知顺序是什么？\n5. 哪些成分可以依靠上下文省略？\n6. 现在的语序是否有真实的 discourse function，还是只是在复制英文主语—谓语骨架？\n\n例如，同样表达某类技术常见于商业场景：\n\n> 投影、追踪、巨型灯光这些技术，平时很容易出现在广告、商业活动中。\n\n可以改成更贴近人的日常感知顺序：\n\n> 我们平时经常在广告、商业活动中看到类似投影、追踪、巨型灯光这些技术。\n\n这里的重点不在“我们”必须放句首。真正变化的是信息如何进入句子：主体进入场景，通过“看到”这个动作遇到对象，句子沿经验顺序展开。\n\n这种改写以材料支持共同观察、任务允许经验视角为前提。只有技术应用信息时，可以保留对象为话题的原句；不能为了更自然而新增“我们”的经历。这个对照同时改变了视角与表达，不能单独证明某种语序普遍更好。\n\n人物也不需要永远前置。以下结构都可能自然成立：\n\n> 到了晚上，一整面建筑外墙会出现互动投影。\n\n> 在 Body Movies 中，我们只需要走进光里，在墙上留下影子。\n\n时间、地点、范围或既有话题承担真实框架功能时，可以自然前置。\n\n因此，不把“person-first”固化成模板。更稳定的规则是：\n\n> **让语序服务于中文语境中的已知 / 新信息、话题 / 述题、时间地点框架、动作关系和注意力移动。**\n\n检查翻译腔时，不只扫描连接词和抽象名词，也检查：\n\n- 英文主语是否被机械保留；\n- 英文被动、所有格、名词化是否控制句子；\n- 地点 / 时间状语是否只是按英文位置搬运；\n- 本来可以通过动词推进的句子，是否被“某物具有某属性”式结构静态化；\n- 中文可以自然省略的成分是否被重复说满；\n- 句子的认知视角是否和真实经验、材料或前文一致。\n\n一句可用于生成时的简化提醒：\n\n> **先用中文理解这句话里的世界，再用中文安排这个世界。**",
-   "sha256": "0aa5370f089711ecea95df4aa19c5ea98d52c905c80c874a365ec81db586d7d0"
+   "start_line": 119,
+   "end_line": 167,
+   "quote": "## 4.1 中文原生句法与信息结构\n\n中文写作不只需要中文词汇，还需要按中文自身的句法与篇章信息结构组织句子。\n\n警惕一种更深的翻译腔：模型先按英语习惯形成完整 proposition，再把词语替换成中文。最终每个词都可能正确，句子的视角、动作顺序、话题推进和信息落点仍然带着英语骨架。\n\n生成中文句子时，先问：\n\n1. 当前篇章里什么已经是已知信息？\n2. 这句话真正要新增什么？\n3. 当前更自然的起点是人物、动作、时间、地点、话题，还是结果？\n4. 谁在做什么？动作怎样发生？人的感知顺序是什么？\n5. 哪些成分可以依靠上下文省略？\n6. 现在的语序是否有真实的 discourse function，还是只是在复制英文主语—谓语骨架？\n\n例如，同样表达某类技术常见于商业场景：\n\n> 投影、追踪、巨型灯光这些技术，平时很容易出现在广告、商业活动中。\n\n可以改成更贴近人的日常感知顺序：\n\n> 我们平时经常在广告、商业活动中看到类似投影、追踪、巨型灯光这些技术。\n\n这里的重点不在“我们”必须放句首。真正变化的是信息如何进入句子：主体进入场景，通过“看到”这个动作遇到对象，句子沿经验顺序展开。\n\n人物也不需要永远前置。以下结构都可能自然成立：\n\n> 到了晚上，一整面建筑外墙会出现互动投影。\n\n> 在 Body Movies 中，我们只需要走进光里，在墙上留下影子。\n\n时间、地点、范围或既有话题承担真实框架功能时，可以自然前置。\n\n因此，不把“person-first”固化成模板。更稳定的规则是：\n\n> **让语序服务于中文语境中的已知 / 新信息、话题 / 述题、时间地点框架、动作关系和注意力移动。**\n\n检查翻译腔时，不只扫描连接词和抽象名词，也检查：\n\n- 英文主语是否被机械保留；\n- 英文被动、所有格、名词化是否控制句子；\n- 地点 / 时间状语是否只是按英文位置搬运；\n- 本来可以通过动词推进的句子，是否被“某物具有某属性”式结构静态化；\n- 中文可以自然省略的成分是否被重复说满；\n- 句子的认知视角是否和真实经验、材料或前文一致。\n\n一句可用于生成时的简化提醒：\n\n> **先用中文理解这句话里的世界，再用中文安排这个世界。**",
+   "sha256": "5655cdf6ac20240065be10ee7616ea2c944fa5f121d2dcdd08a511dba56aa712"
   },
   {
    "id": "r-mechanism",
    "path": "SKILL.md",
-   "start_line": 224,
-   "end_line": 247,
-   "quote": "## 5. 机制先于口号\n\n抽象判断需要能落回发生了什么。\n\n遇到“重塑、重构、本质、核心、复杂性、深刻、格局”等抽象词时，继续问：\n\n- 谁在行动？\n- 什么发生变化？\n- 通过什么机制？\n- 在什么条件下？\n- 谁获得价值或承担成本？\n- 下一轮反馈会怎样改变行为？\n\n一句话看起来很像金句时，检查它是否真的增加信息。\n\n材料没有机制时，指出需要补充什么，或保留原有的有限判断。机制、因果和细节同样受第 6 节的来源约束，不为完成推进链条而补写。\n\n半成型的思想什么时候保留、什么时候追问机制，按思想属于谁和文本功能判定：\n\n- **编辑作者的文本**：不替作者补机制。半成型保留；如果它妨碍读者，指出缺口，交给作者。\n- **生成的文本，功能是让读者据此判断或行动**（解释、产品说明、提案、行动计划）：机制缺失时追问，或标出缺口。\n- **生成的文本，功能是呈现思考过程**（随笔、笔记）：半成型保留，但要写成未完成，不写成定论。\n\n私人或公开不是判定标准：公开发表的随笔可以保留思想的形成过程，私人笔记里的行动计划仍然需要机制。",
-   "sha256": "02103e829343f7c287e0f6790fe2d32e7e276d5b1166d847db8562bdbe7a294e"
+   "start_line": 169,
+   "end_line": 186,
+   "quote": "## 5. 机制先于口号\n\n抽象判断需要能落回发生了什么。\n\n遇到“重塑、重构、本质、核心、复杂性、深刻、格局”等抽象词时，继续问：\n\n- 谁在行动？\n- 什么发生变化？\n- 通过什么机制？\n- 在什么条件下？\n- 谁获得价值或承担成本？\n- 下一轮反馈会怎样改变行为？\n\n一句话看起来很像金句时，检查它是否真的增加信息。\n\n---\n\n# Part II：事实、推断与不确定性",
+   "sha256": "050b9718e90b44bc2032a80dea041d244955f99a699bff288d35f2c5ef653c79"
   },
   {
    "id": "r-grounding",
    "path": "SKILL.md",
-   "start_line": 290,
-   "end_line": 299,
+   "start_line": 188,
+   "end_line": 197,
    "quote": "## 6. 具体化必须有来源\n\n增加具体细节前确认：\n\n1. 信息来自用户、材料、可靠来源，还是模型推断？\n2. 它是事实、候选解释还是示例？\n3. 推断是否保持可撤回？\n4. 这个细节是否只是为了制造画面感？\n\n具体感不能以事实完整性为代价。",
    "sha256": "04bd54e7d3d19345098b57d750ace3d52cbf3bd2bc3b354c16b6c2e9e81e3556"
   },
   {
    "id": "r-inference",
    "path": "SKILL.md",
-   "start_line": 301,
-   "end_line": 311,
+   "start_line": 199,
+   "end_line": 209,
    "quote": "## 7. 推断保持可撤回\n\n人物、动机、情绪、关系和心理状态的分析需要区分：\n\n- 已知事实；\n- 当前反应；\n- 高概率解释；\n- 多个可能解释；\n- 暂时无法判断。\n\n候选解释不要写成结论。证据不足时允许停在不知道。",
    "sha256": "50b3eaa0a166e2a68f5c136d173b823d84539b095cee4f15fb62d931899cc38b"
   },
   {
    "id": "r-emotion",
    "path": "SKILL.md",
-   "start_line": 313,
-   "end_line": 329,
+   "start_line": 211,
+   "end_line": 227,
    "quote": "## 8. 不替对方补情绪和动机\n\n对方只陈述事实、感受不明时，先保留叙述空间。\n\n例如：\n\n> 今天朋友没回我。\n\n信息不足时可以回应：\n\n> 怎么说？\n\n> 然后呢？\n\n> 比如说？\n\n极短承接是合法的完整回复。",
    "sha256": "72967938fbcb4a832908ed6859e7c4715fbc090b76b3d46710843246916cf705"
   },
   {
    "id": "r-candidates",
    "path": "SKILL.md",
-   "start_line": 331,
-   "end_line": 337,
-   "quote": "## 9. 不用候选答案提前收窄叙述\n\n信息不足时，少用：\n\n> 你是因为 A，还是因为 B？\n\n优先开放式追问。对方明确请求分析，或上下文已经足够时，可以提供多个候选模型，并明确它们只是候选。",
-   "sha256": "a9646c2536c0853c4d25d34fbe92cc354065332e85b8116b11f7a3c241985e3f"
+   "start_line": 229,
+   "end_line": 239,
+   "quote": "## 9. 不用候选答案提前收窄叙述\n\n信息不足时，少用：\n\n> 你是因为 A，还是因为 B？\n\n优先开放式追问。对方明确请求分析，或上下文已经足够时，可以提供多个候选模型，并明确它们只是候选。\n\n---\n\n# Part III：Agency-preserving dialogue",
+   "sha256": "c18dbf1362550fe54fbabf0e6b2b47697c9841d2b6310af07715881dbd1113df"
   },
   {
    "id": "r-agency",
    "path": "SKILL.md",
-   "start_line": 343,
-   "end_line": 355,
+   "start_line": 241,
+   "end_line": 253,
    "quote": "## 10. 判定权留给当事人\n\n回应可以提供信息、结构、候选解释、风险、资源、路径与实验。\n\n最终选择、自我定义和价值判断回到当事人。\n\n避免在证据不足时替对方宣布：\n\n- “你真正想要的是……”\n- “你其实就是……”\n- “你需要接受……”\n\n用户明确请求直接建议时，可以更直接，同时说明判断依据。",
    "sha256": "d5ae222f2f061a0dbf3dce88f8c561890e76d6076719b18b4a238389a9f9c9fe"
   },
   {
    "id": "r-density",
    "path": "SKILL.md",
-   "start_line": 357,
-   "end_line": 370,
+   "start_line": 255,
+   "end_line": 268,
    "quote": "## 11. 对话密度跟随互动阶段\n\n回复不需要每轮同时包含承接、总结、分析、建议、风险、下一步和提问。\n\n先判断当前轮是在：\n\n- 陈述；\n- 探索；\n- 请求分析；\n- 请求建议；\n- 请求创作；\n- 单纯互动。\n\n再选择真正需要的动作。",
    "sha256": "15d52dfdab03aa3003fe3548a3ce68c75a989b9ed6c2dde0f9d73b6a28d09408"
   },
   {
    "id": "r-stance",
    "path": "SKILL.md",
-   "start_line": 401,
-   "end_line": 410,
+   "start_line": 299,
+   "end_line": 308,
    "quote": "## 14. 改写不能偷偷改变立场\n\n检查：\n\n- “可能”是否被改成“确定”；\n- “我不确定”是否被改成强判断；\n- 局部经验是否被扩大成普遍结论；\n- 是否增加原作者没有表达的价值立场；\n- 是否为了顺畅删除重要矛盾；\n- 是否新增不存在的情绪或事实。",
    "sha256": "d515dd834b42cc1cd9598cb1251efffffccd777a06b1632fbdc69a30b6bcf838"
   },
   {
    "id": "r-plain",
    "path": "SKILL.md",
-   "start_line": 412,
-   "end_line": 418,
-   "quote": "## 15. Plain Chinese over translated abstraction\n\n中文能自然表达关系时，不保留英文句法骨架只为了显得专业。\n\n这里的“英文句法骨架”同时包括词汇表面以下的信息编排：主语位置、静态属性句、被动、所有格、名词化、状语位置、过度完整的显式成分，以及先按英语 proposition 排完再替换成中文词的句子。\n\n术语重要时可以保留英文括注；正文仍以中文语义连续性和中文原生句法为主。",
-   "sha256": "bb0ecdde2b288d6beb2e2af5d7a44defcd3f8c0bb510413ddf70ffd2c9730bb1"
+   "start_line": 310,
+   "end_line": 320,
+   "quote": "## 15. Plain Chinese over translated abstraction\n\n中文能自然表达关系时，不保留英文句法骨架只为了显得专业。\n\n这里的“英文句法骨架”同时包括词汇表面以下的信息编排：主语位置、静态属性句、被动、所有格、名词化、状语位置、过度完整的显式成分，以及先按英语 proposition 排完再替换成中文词的句子。\n\n术语重要时可以保留英文括注；正文仍以中文语义连续性和中文原生句法为主。\n\n---\n\n# Part V：高风险模式扫描",
+   "sha256": "346427a3b949485d48458320312d00f38578d441196f659348261ecd383f34e0"
   },
   {
    "id": "r-list",
    "path": "SKILL.md",
-   "start_line": 434,
-   "end_line": 440,
-   "quote": "## 17. 三段式惯性\n\n项目数量服从内容。\n\n两项足够就写两项；四项必要就写四项。不要为了节奏自动补成三个。\n\n写列举型内容（产品卖点、要点清单、多维分析）时必查。反过来也不要为了避开三项故意写成两项。",
-   "sha256": "d6fefa9906dbc1b44a082d4b9ca90c49ef9ff6416f4302b39b180bdf01289fc3"
+   "start_line": 332,
+   "end_line": 336,
+   "quote": "## 17. 三段式惯性\n\n项目数量服从内容。\n\n两项足够就写两项；四项必要就写四项。不要为了节奏自动补成三个。",
+   "sha256": "c9b144fbef55a0fd84d1d43a1ac535c01f6bbb1065e3d288540ac3e2fdbbaf7f"
   },
   {
    "id": "r-summary",
    "path": "SKILL.md",
-   "start_line": 442,
-   "end_line": 446,
+   "start_line": 338,
+   "end_line": 342,
    "quote": "## 18. 过度总结与过度完整\n\n避免每段都以宏大结论收尾，也避免每轮都执行固定的“复述 → 三点分析 → 建议 → 提问”。\n\n完整性服务于任务，不服务于模板。",
    "sha256": "6099f90cf097ee7169f4f239087922090eab703295f749d2b7219f6cbf5cce52"
   },
   {
    "id": "c-001",
    "path": "benchmarks/cases.md",
-   "start_line": 9,
+   "start_line": 7,
    "end_line": 23,
-   "quote": "## Core Case 001 — 无来源对立\n\n**Prompt**：解释品牌是什么。\n\n**Bad**\n\n> 品牌不是一个 logo，而是一套完整的认知系统。\n\n上下文没有出现“品牌 = logo”。\n\n**Better**\n\n> 品牌组织人们如何识别、记忆和理解一个对象，也参与身份与价值的形成。\n\n**Rule**：B-first / contrast gate.",
-   "sha256": "39139c8d0f2be48f26a03956f19df51c18401cb29d493c2518cb927287f218f1"
+   "quote": "## Core Case 001 — 无来源对立\n\n**Prompt**：解释品牌是什么。\n\n**Bad**\n\n> 品牌不是一个 logo，而是一套完整的认知系统。\n\n上下文没有出现“品牌 = logo”。\n\n**Better**\n\n> 品牌组织人们如何识别、记忆和理解一个对象，也参与身份与价值的形成。\n\n**Rule**：B-first / contrast gate.\n\n---",
+   "sha256": "a6b1170f548a2b14992581ffb039577fb55d5ec1ff6ab59ff1ed8a5df4cc06d9"
   },
   {
    "id": "c-003",
    "path": "benchmarks/cases.md",
-   "start_line": 41,
+   "start_line": 39,
    "end_line": 53,
-   "quote": "## Core Case 003 — 合法 contrast 应保留\n\n**Context**\n\n> 对方刚刚说：“品牌说到底就是 logo 和视觉。”\n\n**Valid**\n\n> 品牌不只由视觉识别构成。命名、叙事、产品体验和长期重复出现的行为，也会参与人们如何识别和记住它。\n\n这里 A 已经真实存在，回应 A 能增加理解。\n\n**Rule**：contrast gate is conditional, not a ban.",
-   "sha256": "d9179ec0ae171092957c5906b5ee9f43274f0c0712d3e075cb74b4b5b001ce9e"
+   "quote": "## Core Case 003 — 合法 contrast 应保留\n\n**Context**\n\n> 对方刚刚说：“品牌说到底就是 logo 和视觉。”\n\n**Valid**\n\n> 品牌不只由视觉识别构成。命名、叙事、产品体验和长期重复出现的行为，也会参与人们如何识别和记住它。\n\n这里 A 已经真实存在，回应 A 能增加理解。\n\n**Rule**：contrast gate is conditional, not a ban.\n\n---",
+   "sha256": "0906fc6350cf25395a5fc30104d68fb89257fbe4ca71a6ae817e38f4685eb5f6"
   },
   {
    "id": "c-004",
    "path": "benchmarks/cases.md",
-   "start_line": 57,
+   "start_line": 55,
    "end_line": 69,
-   "quote": "## Core Case 004 — 不把“删掉 A”当成生成方法\n\n**Prompt**：解释为什么高密度社区需要恢复空间。\n\n**Bad reasoning shape**\n\n> 社区不是越热闹越好。真正重要的是……\n\n**Better**\n\n> 高频互动会持续消耗注意力和社交能量。社区如果同时提供可退出、独处和恢复的空间，成员更容易长期留在高密度关系中。\n\n**Rule**：generate from B; do not draft A first and delete later.",
-   "sha256": "c23e44b4cd5b0fa29108f2ea66865ce814a71f7684a9bdd48b3be9c6f3fadcc0"
+   "quote": "## Core Case 004 — 不把“删掉 A”当成生成方法\n\n**Prompt**：解释为什么高密度社区需要恢复空间。\n\n**Bad reasoning shape**\n\n> 社区不是越热闹越好。真正重要的是……\n\n**Better**\n\n> 高频互动会持续消耗注意力和社交能量。社区如果同时提供可退出、独处和恢复的空间，成员更容易长期留在高密度关系中。\n\n**Rule**：generate from B; do not draft A first and delete later.\n\n---",
+   "sha256": "6bcbbf4033c48b0c32acc9da34a913e1ddd7a308ab209e86c6838d5758d99424"
   },
   {
    "id": "c-005",
    "path": "benchmarks/cases.md",
-   "start_line": 73,
+   "start_line": 71,
    "end_line": 87,
-   "quote": "## Core Case 005 — 信息不足时补情绪\n\n**User**\n\n> 今天朋友没回我。\n\n**Bad**\n\n> 你是不是有点失落，也担心朋友在疏远你？\n\n**Better**\n\n> 怎么说？\n\n**Rule**：inference restraint / open continuation.",
-   "sha256": "e34c40a9096c55cfc84e69267ef588985f0c0ffa2691a8a2fa688e9a8d0e7a87"
+   "quote": "## Core Case 005 — 信息不足时补情绪\n\n**User**\n\n> 今天朋友没回我。\n\n**Bad**\n\n> 你是不是有点失落，也担心朋友在疏远你？\n\n**Better**\n\n> 怎么说？\n\n**Rule**：inference restraint / open continuation.\n\n---",
+   "sha256": "aaa665c02fb6c5010216f3c3bdc01dead51da0dacb8fb8c3e854cc104b959de8"
   },
   {
    "id": "c-006",
    "path": "benchmarks/cases.md",
-   "start_line": 91,
+   "start_line": 89,
    "end_line": 105,
-   "quote": "## Core Case 006 — 候选答案绑架\n\n**User**\n\n> 我最近不太想去那个活动。\n\n**Bad**\n\n> 是因为你觉得社交太累，还是觉得那里的人不适合你？\n\n**Better**\n\n> 为什么不太想去？\n\n**Rule**：do not narrow narrative space too early.",
-   "sha256": "38401a784dfa7d19137555098889e66cdf47f00b6fa555f71db562ae04597d10"
+   "quote": "## Core Case 006 — 候选答案绑架\n\n**User**\n\n> 我最近不太想去那个活动。\n\n**Bad**\n\n> 是因为你觉得社交太累，还是觉得那里的人不适合你？\n\n**Better**\n\n> 为什么不太想去？\n\n**Rule**：do not narrow narrative space too early.\n\n---",
+   "sha256": "e8bf6db681f7534d7c159f743366662d33f7b68105bd7426914daa92b6a686d9"
   },
   {
    "id": "c-007",
    "path": "benchmarks/cases.md",
-   "start_line": 109,
+   "start_line": 107,
    "end_line": 125,
-   "quote": "## Core Case 007 — 为了具体而编事实\n\n**Input**\n\n> 这家咖啡馆在杭州。\n\n**Bad rewrite**\n\n> 这家在杭州开了三年的手冲咖啡馆，由老建筑改造而成。\n\n**Better**\n\n> 这家咖啡馆在杭州。\n\n需要更具体时，只使用已有材料补充。\n\n**Rule**：evidence-bound specificity.",
-   "sha256": "7b98c3400255b4665d1bc604917405197513ac551487ca59c453b4df040ad62c"
+   "quote": "## Core Case 007 — 为了具体而编事实\n\n**Input**\n\n> 这家咖啡馆在杭州。\n\n**Bad rewrite**\n\n> 这家在杭州开了三年的手冲咖啡馆，由老建筑改造而成。\n\n**Better**\n\n> 这家咖啡馆在杭州。\n\n需要更具体时，只使用已有材料补充。\n\n**Rule**：evidence-bound specificity.\n\n---",
+   "sha256": "92db4ce6e63204053bdfa016453b577d3abd9ae083aca8e1eb20c778d81b1aa7"
   },
   {
    "id": "c-008",
    "path": "benchmarks/cases.md",
-   "start_line": 129,
-   "end_line": 143,
-   "quote": "## Core Case 008 — 三段式惯性\n\n> 2026-09-08 复核：下列 Better 的“继续／下一步”也需要先后或递进依据。见诊断 csf-031/032。\n\n材料只支持“注意力”和“行动”。\n\n**Bad**\n\n> 它改变了人的注意力、身份和行动方式。\n\n**Better**\n\n> 它改变了人的注意力分配，也会继续影响下一步行动。\n\n**Rule**：item count follows content.",
-   "sha256": "67df8b4c6f9dd1732d315c097da69ccb64ea58998af56e6251248a550a79445d"
+   "start_line": 127,
+   "end_line": 141,
+   "quote": "## Core Case 008 — 三段式惯性\n\n材料只支持“注意力”和“行动”。\n\n**Bad**\n\n> 它改变了人的注意力、身份和行动方式。\n\n**Better**\n\n> 它改变了人的注意力分配，也会继续影响下一步行动。\n\n**Rule**：item count follows content.\n\n---",
+   "sha256": "ec3984c394eda786297828f883105e180470ca8b24cca39ff1b5d792139bf354"
   },
   {
    "id": "c-009",
    "path": "benchmarks/cases.md",
-   "start_line": 147,
-   "end_line": 163,
-   "quote": "## Core Case 009 — 改写不能升级确定性\n\n> 2026-09-08 复核：下列 Better 虽保留“可能”，但新增“开始／也”；严格保真任务可直接 KEEP。见 csf-025。\n\n**Input**\n\n> 我现在会怀疑，这可能和工作环境有关。\n\n**Bad rewrite**\n\n> 我意识到，问题的根源就在工作环境。\n\n**Better**\n\n> 我开始怀疑，这件事可能也和工作环境有关。\n\n**Rule**：preserve uncertainty and stance.",
-   "sha256": "3bf4b880015a2eb0a83f1af3761e4548fcd7c1ba2bc6632f08b93d4bc358e407"
+   "start_line": 143,
+   "end_line": 159,
+   "quote": "## Core Case 009 — 改写不能升级确定性\n\n**Input**\n\n> 我现在会怀疑，这可能和工作环境有关。\n\n**Bad rewrite**\n\n> 我意识到，问题的根源就在工作环境。\n\n**Better**\n\n> 我开始怀疑，这件事可能也和工作环境有关。\n\n**Rule**：preserve uncertainty and stance.\n\n---",
+   "sha256": "28fe54f8f1771abc4d5b57e5159bcd2d8385d87f4c3208ff031975a60515af00"
   },
   {
    "id": "c-010",
    "path": "benchmarks/cases.md",
-   "start_line": 167,
-   "end_line": 179,
-   "quote": "## Core Case 010 — 抽象词替代机制\n\n> 2026-09-08 复核：仓库未提供产品机制材料，下列 Better 仅能作为有相应资料时的示意，不能据此补事实。见 csf-021/022。\n\n**Bad**\n\n> 这个产品重塑了人与城市之间的关系。\n\n**Better**\n\n> 它给原本只能经过的公共空间增加了停留、回应和与陌生人共同参与的动作，人和城市发生关系的方式因此变多了。\n\n**Rule**：mechanism before abstraction.",
-   "sha256": "ec2f9a4aeda79d2840df4bb120a450eb226574ab590b0edf1a1a2807ac3a0a9a"
+   "start_line": 161,
+   "end_line": 173,
+   "quote": "## Core Case 010 — 抽象词替代机制\n\n**Bad**\n\n> 这个产品重塑了人与城市之间的关系。\n\n**Better**\n\n> 它给原本只能经过的公共空间增加了停留、回应和与陌生人共同参与的动作，人和城市发生关系的方式因此变多了。\n\n**Rule**：mechanism before abstraction.\n\n---",
+   "sha256": "02c017c3c6ca8bcce84888ed8b223236576d4458d1b17f31a635d85ebbf66cd7"
   },
   {
    "id": "c-011",
    "path": "benchmarks/cases.md",
-   "start_line": 183,
-   "end_line": 197,
-   "quote": "## Core Case 011 — 过度完整回复\n\n**User**\n\n> 不知道呢，可能只是顺手也不一定。\n\n**Bad**\n\n> 我理解你的意思。这里可能有三种情况……所以你现在最重要的是不要过度解读。你更倾向哪一种？\n\n**Better**\n\n> 嗯，也完全可能只是顺手。\n\n**Rule**：response density follows the moment.",
-   "sha256": "66b52250e0abdbe60618066dca62447e2057b055eb32ed7b7cf91289e7b2139b"
+   "start_line": 175,
+   "end_line": 191,
+   "quote": "## Core Case 011 — 过度完整回复\n\n**User**\n\n> 不知道呢，可能只是顺手也不一定。\n\n**Bad**\n\n> 我理解你的意思。这里可能有三种情况……所以你现在最重要的是不要过度解读。你更倾向哪一种？\n\n**Better**\n\n> 嗯，也完全可能只是顺手。\n\n**Rule**：response density follows the moment.\n\n---",
+   "sha256": "03574dc944bf59b4f58a5118fee0a6da513fb72e17acc3b98a4ea89b93c77fa2"
   },
   {
    "id": "c-012",
    "path": "benchmarks/cases.md",
-   "start_line": 201,
-   "end_line": 227,
-   "quote": "## Core Case 012 — 中文词汇正确，句法仍然可能带着英语骨架\n\n> 2026-09-08 复核：此对照同时改变视角与词汇，并删除“大型 spectacle”；不能隔离语序效果或证明隐藏的思考语言。见 csf-013/014/039/040。\n\n**Context**：作者正在从日常经验进入一个关于城市互动技术的判断。\n\n**AI-ish**\n\n> 投影、追踪、巨型灯光这些技术，平时很容易出现在广告、商业活动和大型 spectacle 里。\n\n**Native Chinese revision**\n\n> 其实，我们平时经常在广告、商业活动中看到类似投影、追踪、巨型灯光这些技术。\n\n变化不只是“把我们放到句首”。后一个版本沿人的日常感知展开：我们 → 平时经常 → 在某些场景 → 看到 → 某类技术。动词“看到”承担了经验与对象之间的关系。\n\n**Boundary / legal counterexamples**\n\n以下句子同样可以自然成立：\n\n> 到了晚上，一整面建筑外墙会出现互动投影。\n\n> 在 Body Movies 中，我们只需要走进光里，在墙上留下影子。\n\n时间、范围或话题在当前篇章承担真实 framing function 时，可以自然前置。因此不把 `person-first` 设成规则。\n\n**Rule**：Chinese-native syntax and discourse information order. Sentence order follows Chinese topic/comment structure, given/new information, temporal/spatial framing, action relations and attention movement; do not form an English proposition first and replace its words with Chinese.",
-   "sha256": "b395292579162725025c3fbf8d1474096bcd658430dfd3eaee200452c3da2e77"
+   "start_line": 193,
+   "end_line": 221,
+   "quote": "## Core Case 012 — 中文词汇正确，句法仍然可能带着英语骨架\n\n**Context**：作者正在从日常经验进入一个关于城市互动技术的判断。\n\n**AI-ish**\n\n> 投影、追踪、巨型灯光这些技术，平时很容易出现在广告、商业活动和大型 spectacle 里。\n\n**Native Chinese revision**\n\n> 其实，我们平时经常在广告、商业活动中看到类似投影、追踪、巨型灯光这些技术。\n\n变化不只是“把我们放到句首”。后一个版本沿人的日常感知展开：我们 → 平时经常 → 在某些场景 → 看到 → 某类技术。动词“看到”承担了经验与对象之间的关系。\n\n**Boundary / legal counterexamples**\n\n以下句子同样可以自然成立：\n\n> 到了晚上，一整面建筑外墙会出现互动投影。\n\n> 在 Body Movies 中，我们只需要走进光里，在墙上留下影子。\n\n时间、范围或话题在当前篇章承担真实 framing function 时，可以自然前置。因此不把 `person-first` 设成规则。\n\n**Rule**：Chinese-native syntax and discourse information order. Sentence order follows Chinese topic/comment structure, given/new information, temporal/spatial framing, action relations and attention movement; do not form an English proposition first and replace its words with Chinese.\n\n---\n\n# Extension cases",
+   "sha256": "7865c7bc63700229adcff157c104e63f513a3c199a017bddf0a8200d6485f44c"
   },
   {
    "id": "r-promotion",
    "path": "docs/rule-taxonomy.md",
-   "start_line": 71,
-   "end_line": 84,
+   "start_line": 61,
+   "end_line": 74,
    "quote": "## Promotion gate\n\n一个新观察通常沿这条路径移动：\n\n> taste reaction → articulation → candidate rule → examples → boundary conditions → benchmark → repeated validation → possible promotion\n\n升级规则前问：\n\n1. 这个问题属于语义、中文表达、互动，还是个人 style？\n2. 它能否跨作者、跨例子成立？\n3. 它会误伤哪些本来合法的表达？\n4. 更适合写成条件 gate，还是明确 prohibition？\n5. 有没有合法反例证明边界？\n6. 能否形成具体 regression case？",
    "sha256": "96ae02ecafb9543c12b3604aafe6a4a808f4036a60d283dc2c7ac24f7028752a"
   }
