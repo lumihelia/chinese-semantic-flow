@@ -8,7 +8,7 @@ Chinese Semantic Flow 是一个持续迭代的中文生成、改写、编辑与�
 
 **当前版本：`v0.4.1`**
 
-仓库包含 core Skill、可追溯的 regression cases 与一套不调用模型的诊断评估工具。当前尚未证明 core 的跨来源质量收益；`Better` 标签是仓库判断，不是金标准。
+仓库包含 core Skill、可追溯的 regression cases 与一套不调用模型的诊断评估工具。当前尚未证明 core 的跨来源质量收益；`Better` 只代表仓库当前的判断，不能当作标准答案。
 
 ## 核心原则
 
