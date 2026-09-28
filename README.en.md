@@ -121,12 +121,6 @@ Use chinese-semantic-flow to rewrite this Chinese paragraph. Preserve the author
 Use chinese-semantic-flow and load extensions/my-house-style.md.
 ```
 
-## Why this is different from a Humanizer
-
-A Humanizer usually detects visible AI-writing patterns and cleans them up afterward.
-
-Chinese Semantic Flow moves the intervention earlier: which proposition should exist at all, how Chinese discourse should order the information, which relation is being expressed, what can be inferred, and where generation should stop. Natural language is one outcome of better judgment rather than the sole target.
-
 ## Rule taxonomy and evaluation
 
 Rule layers, conflict priority, and the promotion gate: [`docs/rule-taxonomy.en.md`](./docs/rule-taxonomy.en.md). New observations move through taste reaction → articulation → candidate rule → boundary → benchmark → repeated validation → revision. v0.3 deliberately stores counterexamples to the narrower person-first hypothesis so a useful insight does not harden into another template.

@@ -150,12 +150,6 @@ Core 不携带个人 taste。某位作者的代词约定、长文运动，或某
 使用 chinese-semantic-flow，并加载 extensions/my-house-style.md。
 ```
 
-## 和 Humanizer 类工具的区别
-
-Humanizer 常从表面语言模式识别 AI 痕迹，再清理可见特征。
-
-Chinese Semantic Flow 把检查点放到更早的生成判断：真正成立的命题是什么、关系怎样排列、中文里哪些信息应该先出现、哪些动作应该推动句子、哪些内容可以推断、哪些地方应当停住。语言自然度是这些判断正确之后产生的结果之一。
-
 ## Rule taxonomy
 
 规则分层、冲突优先级与 promotion gate 见 [`docs/rule-taxonomy.md`](./docs/rule-taxonomy.md)。
